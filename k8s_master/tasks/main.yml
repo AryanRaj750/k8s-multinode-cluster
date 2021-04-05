@@ -1,0 +1,86 @@
+---
+# tasks file for k8s_master
+- name: "install docker"
+  package:
+      name: docker
+      state: present
+          
+- name: "start docker service"
+  service:
+      name: docker
+      state: started
+      enabled: true
+           
+
+- name: "yum reconfigure for k8s"
+  copy:
+      src: "kubernetes.repo"
+      dest: "/etc/yum.repos.d/"
+  register: yumConf
+
+- name: "yum repolist"
+  command: "yum repolist -y"
+  when: yumConf.changed == true
+  ignore_errors: true
+
+- name: "install kubeadm package"
+  shell: "yum install -y kubelet kubeadm kubectl --disableexcludes=kubernetes"
+  
+
+- name: "start kubelet service"
+  service:
+      name: kubelet
+      state: started
+      enabled: true
+              
+- name: "config images"
+  command: "kubeadm config images pull"
+  when: kubeQ.rc != 0 
+
+- name: "changing driver as systemd"
+  copy:
+      src: "daemon.json"
+      dest: "/etc/docker/"
+  when: kubeQ.rc != 0
+
+- name: "restart docker service"
+  service:
+       name: docker
+       state: restarted
+       enabled: true 
+  when: kubeQ.rc != 0
+
+- name: "install iproute-tc package"
+  command: "yum install iproute-tc -y"
+  
+
+- name: "configure master node"
+  shell: "kubeadm init --pod-network-cidr=10.244.0.0/16 --ignore-preflight-errors=NumCPU --ignore-preflight-errors=Mem"
+  ignore_errors: true
+  register: mconf
+
+- name: "create directory in HOME"
+  shell: "mkdir -p $HOME/.kube"
+  when: mconf.rc == 0
+
+- name: "copy k8s config file to kube dir"
+  shell: "cp -i /etc/kubernetes/admin.conf $HOME/.kube/config"
+  when: mconf.rc == 0
+
+- name: "change owner of file"
+  shell: "chown $(id -u):$(id -g) $HOME/.kube/config"
+  when: mconf.rc == 0
+
+- name: "install flannel"
+  shell: "kubectl apply  -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml"
+  ignore_errors: true
+
+- name: "generate new token"
+  shell: "kubeadm token create  --print-join-command"
+  register: token
+
+- name: "Add dummy  host"
+  add_host:
+      name: "Dummy_Host"
+      token: "{{ token.stdout_lines[0] }}"
+

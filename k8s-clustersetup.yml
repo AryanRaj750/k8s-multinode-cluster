@@ -1,0 +1,15 @@
+      
+- hosts: tag_node_master
+  become: yes
+  become_method: sudo
+  remote_user: ec2-user
+  roles:
+          - k8s_master
+
+
+- hosts: tag_node_worker
+  become: yes
+  become_method: sudo
+  remote_user: ec2-user
+  roles:
+          - k8s_worker

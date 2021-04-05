@@ -1,0 +1,63 @@
+---
+# tasks file for k8s_worker
+- name: "install docker"
+  package:
+      name: docker
+      state: present
+          
+- name: "start docker service"
+  service:
+      name: docker
+      state: started
+      enabled: true
+           
+
+- name: "yum reconfigure for k8s"
+  copy:
+      src: "kubernetes.repo"
+      dest: "/etc/yum.repos.d/"
+  register: yumConf
+
+- name: "yum repolist"
+  command: "yum repolist -y"
+  when: yumConf.changed == true
+  ignore_errors: true
+
+- name: "install kubeadm package"
+  shell: "yum install -y kubelet kubeadm kubectl --disableexcludes=kubernetes"
+
+- name: "start kubelet service"
+  service:
+      name: kubelet
+      state: started
+      enabled: true
+
+- name: "changing driver as systemd"
+  copy:
+      src: "daemon.json"
+      dest: "/etc/docker/"
+  when: kubeQ.rc != 0
+
+- name: "restart docker service"
+  service:
+       name: docker
+       state: restarted
+       enabled: true 
+  when: kubeQ.rc != 0
+
+- name: "install iproute-tc package"
+  command: "yum install iproute-tc -y"
+
+- name: "enable kernel bridge setting"
+  copy:
+          src: "k8s.conf"
+          dest: "/etc/sysctl.d/"
+  register: k8sconf
+
+- name: "remove caches"
+  shell: "echo 3 > /proc/sys/vm/drop_caches"
+  when: k8sconf.changed == true
+  ignore_errors: true
+
+- name: "join workner node to master node"
+  shell: "{{ hostvars['Dummy_Host']['token'] }}"

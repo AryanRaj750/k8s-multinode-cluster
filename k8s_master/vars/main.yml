@@ -1,0 +1,3 @@
+---
+# vars file for k8s_master
+#masterNode: "{{node_port_master}}"
