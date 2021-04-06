@@ -56,9 +56,8 @@ change but you have to update configmap file of flannel pod maually. otherwise, 
 bridge network connection. k8s.conf will enables bridge for connection. ```workernode will be join automatically to master node```. you don't need to join it.
 
 >## Inventory File
-> *Inside your inventory these keywords should be present* 
-<br>
->Define `become_user=" ", remote_user=" "` keyword either in inventory file or in playbook or at both places. <br>
+> *Inside your inventory these keywords should be present* <br>
+> Define `become_user=" ", remote_user=" "` keyword either in inventory file or in playbook or at both places. <br>
 >![inventory look likes](https://drive.google.com/uc?export=view&id=1ojDzvqniPG4TvCyETKxGMJFD4TmmCrC1)
 >
 
