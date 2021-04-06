@@ -26,7 +26,7 @@
 <br>
 
 > ## **Test** 
->Both **[ec2.py](https://raw.githubusercontent.com/ansible/ansible/stable-1.9/plugins/inventory/ec2.py)** and **[ec2.ini](https://raw.githubusercontent.com/ansible/ansible/stable-1.9/plugins/inventory/ec2.ini)** files should be present in /etc/ansible/ direcory. and the [ec2.py](https://raw.githubusercontent.com/ansible/ansible/stable-1.9/plugins/inventory/ec2.py) file should be executable (run chmod +x [ec2.py](https://raw.githubusercontent.com/ansible/ansible/stable-1.9/plugins/inventory/ec2.py) to make executable)/
+>Both **[ec2.py](https://raw.githubusercontent.com/ansible/ansible/stable-1.9/plugins/inventory/ec2.py)** and **[ec2.ini](https://raw.githubusercontent.com/ansible/ansible/stable-1.9/plugins/inventory/ec2.ini)** files should be present in /etc/ansible/ direcory and the [ec2.py](https://raw.githubusercontent.com/ansible/ansible/stable-1.9/plugins/inventory/ec2.py) file should be executable (run chmod +x [ec2.py](https://raw.githubusercontent.com/ansible/ansible/stable-1.9/plugins/inventory/ec2.py) to make executable)/
 >* Run ./ec2.py --list
 
 <br>
@@ -58,14 +58,23 @@ bridge network connection. k8s.conf will enables bridge for connection. ```worke
 >## Inventory File
 > *Inside your inventory these keywords should be present* 
 <br>
-Define `become_user=" ", remote_user=" "` keyword either in inventory file or in playbook or at both places.
+>Define `become_user=" ", remote_user=" "` keyword either in inventory file or in playbook or at both places. <br>
 >![inventory look likes](https://drive.google.com/uc?export=view&id=1ojDzvqniPG4TvCyETKxGMJFD4TmmCrC1)
+>
 
 <br>
 
+>## instance_launch.yml
+> This file is for launching instances on AWS cloud
+> 
+>## k8s-clustersetup.yml
+> This file contains two hosts e.g **Master host and worker host**. This file is used to configure master and worker node.
+
 >## Run playbook
-> To run playbook write command
-><br> ansible-playbook < file name >
+>To launch instances on AWS Run playbook
+><br> ansible-playbook instance_launch.yml
+> To *configure master and worker node run playbook*
+><br> ansible-playbook k8s-clustersetup.yml
 
 <br>
 
