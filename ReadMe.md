@@ -21,7 +21,7 @@
 >- export EC2_INI_PATH=/etc/ansible/ec2.ini
 >- ssh-add ~/.ssh/keypair.pem // first copy pem file in /root/.ssh/ directory then run
  <br>
- [Follow this for better understanding](https://docs.ansible.com/ansible/2.5/user_guide/intro_dynamic_inventory.html#example-aws-ec2-external-inventory-script)
+> [Follow this for better understanding](https://docs.ansible.com/ansible/2.5/user_guide/intro_dynamic_inventory.html#example-aws-ec2-external-inventory-script)
 
 <br>
 
