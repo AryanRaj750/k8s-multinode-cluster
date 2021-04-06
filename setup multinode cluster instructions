@@ -1,4 +1,5 @@
 # k8s-multinode-cluster
+***
 This is for setup over cloud e.g AWS. In your system python script file e.g ec2.py or other which can retrieve information from your AWS account about instances.
 And then second important file is ec2.ini file. Both these files should be in your /etc/ansible/ direcory. and the ec2.py file should be executable (run chmod +x ec2.py to make executable)/
 There should be not version confliction(e.g python file & ansible version) other face many problems.
