@@ -1,14 +1,18 @@
 <!--- Headings --->
 >>># **K8s Multinode Cluster**
-## Prerequisities
-- python script file for retrieving IPs of running instances e.g *[ec2.py](https://raw.githubusercontent.com/ansible/ansible/stable-1.9/plugins/inventory/ec2.py)*
-- python configuration file e.g *[ec2.ini](https://raw.githubusercontent.com/ansible/ansible/stable-1.9/plugins/inventory/ec2.ini)*
-- Ansible version 2.7
-- python 3.6 or above 
-- boto3 python module
-<br><br>
 
-> ## **AWS Configure** :-
+<br>
+
+>## **Prerequisities** 
+>- python script file for retrieving IPs of running instances e.g *[ec2.py](https://raw.githubusercontent.com/ansible/ansible/stable-1.9/plugins/inventory/ec2.py)*
+>- python configuration file e.g *[ec2.ini](https://raw.githubusercontent.com/ansible/ansible/stable-1.9/plugins/inventory/ec2.ini)*
+>- Ansible version 2.7
+>- python 3.6 or above 
+>- boto3 python module
+
+<br>
+
+> ## **AWS Configure** 
 >### Run these commands configure AWS:-
 >**you must have IAM user**
 >- export AWS_ACCESS_KEY_ID='YOUR_AWS_API_KEY'
@@ -17,7 +21,7 @@
 >- export EC2_INI_PATH=/etc/ansible/ec2.ini
 >- ssh-add ~/.ssh/keypair.pem // first copy pem file in /root/.ssh/ directory then run
  <br>
- *[Follow this for better understanding](https://docs.ansible.com/ansible/2.5/user_guide/intro_dynamic_inventory.html#example-aws-ec2-external-inventory-script)*
+ [Follow this for better understanding](https://docs.ansible.com/ansible/2.5/user_guide/intro_dynamic_inventory.html#example-aws-ec2-external-inventory-script)
 
 <br>
 
@@ -52,19 +56,20 @@ change but you have to update configmap file of flannel pod maually. otherwise, 
 bridge network connection. k8s.conf will enables bridge for connection. ```workernode will be join automatically to master node```. you don't need to join it.
 
 >## Inventory File
-> *Inside your inventory these keywords should be present*
->![inventory look likes](https://drive.google.com/uc?export=view&id=1ojDzvqniPG4TvCyETKxGMJFD4TmmCrC1)
+> *Inside your inventory these keywords should be present* 
 <br>
-Define `become_user=" ", remote_user=" "` keyword either in inventory file or in playbook or at both places. 
+Define `become_user=" ", remote_user=" "` keyword either in inventory file or in playbook or at both places.
+>![inventory look likes](https://drive.google.com/uc?export=view&id=1ojDzvqniPG4TvCyETKxGMJFD4TmmCrC1)
+
+<br>
 
 >## Run playbook
 > To run playbook write command
-><br> ansible-playbook < file name > 
+><br> ansible-playbook < file name >
 
+<br>
 
-
-
-
-
-
-
+>## Help
+>For any query you can mail me <br>
+Email:- ar9131000@gmail.com <br>
+LinkedIn:- https://www.linkedin.com/in/aryanraj750/
